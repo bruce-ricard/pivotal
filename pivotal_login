@@ -205,7 +205,7 @@ if [[ -n ${SAVE_ALIAS} ]]; then
     save_alias "$SAVE_ALIAS" "$LPASS_USERNAME"
 fi
 
-ps -p $SSH_AGENT_PID > /dev/null || eval "$(ssh-agent)"
+ps -p "$SSH_AGENT_PID" > /dev/null || eval "$(ssh-agent)"
 
 /usr/bin/ssh-add -D
 /usr/bin/ssh-add -t "${HOURS}H" - <<< "${KEY}"
