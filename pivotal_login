@@ -141,13 +141,16 @@ function save_alias {
 function find_alias {
     ALIAS=$1
 
-    STORE_LINE=$(grep "^${ALIAS}#" "${STORE}")
+    set +e
+    STORE_LINE="$(grep "^${ALIAS}#" "${STORE}")"
     if [[ "$?" = 0 ]]; then
         ALIAS_OPTIONS=$(echo "$STORE_LINE" | cut -d# -f2)
     else
         echo "The alias \"$ALIAS\" cannot be found."
         exit 9
     fi
+
+    set -e
 }
 
 function options_from_username {
