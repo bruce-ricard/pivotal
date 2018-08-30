@@ -172,6 +172,22 @@ function logout {
     exit 0
 }
 
+function validate_ssh_agent_running {
+    set +e
+    \ssh-add -L > /dev/null 2>&1
+
+    if [[ $? == 2 ]]; then
+        echo "We could't connect to a running ssh-agent, we recommend adding:"
+        echo
+        echo 'eval $(ssh-agent)'
+        echo
+        echo 'to your .profile script so that it is run on login'
+        exit 10
+    fi
+}
+
+validate_ssh_agent_running
+
 if [[ "$USERNAME" = '-o' || "$USERNAME" = "--logout" ]]; then
     logout
 fi
@@ -204,8 +220,6 @@ fi
 if [[ -n ${SAVE_ALIAS} ]]; then
     save_alias "$SAVE_ALIAS" "$LPASS_USERNAME"
 fi
-
-ps -p "$SSH_AGENT_PID" > /dev/null || eval "$(ssh-agent)"
 
 /usr/bin/ssh-add -D
 /usr/bin/ssh-add -t "${HOURS}H" - <<< "${KEY}"
