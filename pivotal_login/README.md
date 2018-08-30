@@ -36,8 +36,7 @@ That's it! You are now all set to work with git and Concourse.
 
 ```
 curl https://raw.githubusercontent.com/bruce-ricard/pivotal/master/pivotal_login/pivotal_login > pivotal_login
+chmod +x pivotal_login
+mv pivotal_login /usr/local/bin # or your favorite PATH directory
 
 ```
-
-Then move the file to a directory in your `PATH` (e.g. `/usr/local/bin`)
-All done.
