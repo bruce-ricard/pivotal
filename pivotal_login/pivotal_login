@@ -142,6 +142,9 @@ function find_alias {
     ALIAS=$1
 
     set +e
+
+    [[ -f ${STORE} ]] || touch ${STORE}
+
     STORE_LINE="$(grep "^${ALIAS}#" "${STORE}")"
     if [[ "$?" = 0 ]]; then
         ALIAS_OPTIONS=$(echo "$STORE_LINE" | cut -d# -f2)
